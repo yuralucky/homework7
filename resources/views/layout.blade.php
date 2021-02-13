@@ -22,9 +22,7 @@
         <li class="nav-item">
             <a class="nav-link" href="list-categories.php">Categories</a>
         </li>
-
     </ul>
-
     @yield('content')
 </div>
 
