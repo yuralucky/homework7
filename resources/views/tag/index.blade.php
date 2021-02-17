@@ -1,9 +1,9 @@
 @extends('layout')
 
-@section('title', 'Homepage')
+@section('title', 'List categories')
 
 @section('content')
-    <h1>All tags</h1>
+    <h1>List tags</h1>
     <table class="table table-striped">
         <thead>
         <tr>
@@ -19,16 +19,15 @@
                 <th scope="row">{{$tag->id}}</th>
                 <td>{{$tag->title}}</td>
                 <td>{{$tag->slug}}</td>
-                <td><a href="add-new-tag.php?id={{$tag->id}}" class="btn btn-info">Edit</a><a href="delete_tag.php?id={{$tag->id}}" class="btn btn-danger">Delete</a></td>
+                <td><a href="/tag/{{$tag->id}}/edit/" class="btn btn-info">Edit</a><a href="/tag/{{$tag->id}}/destroy/" class="btn btn-danger">Delete</a></td>
             </tr>
         @empty
-            <p>No categories</p>
+            <p>No tags</p>
         @endforelse
 
         </tbody>
     </table>
     <div class="d-grid gap-1">
-
-        <a type="submit" href="add-new-tag.php" class="btn btn-primary">Add new tag</a>
+        <a type="submit" href="/tag/create" class="btn btn-primary">Add new tag</a>
     </div>
 @endsection

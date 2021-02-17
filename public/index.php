@@ -1,11 +1,11 @@
 <?php
 
 require_once '../vendor/autoload.php';
+
 require_once '../config/eloquent.php';
 require_once '../config/blade.php';
-
-/** @var $blade */
-
+require_once '../config/router.php';
 
 
-echo $blade->make('pages/index')->render();
+$responce = $router->dispatch($request);
+echo $responce->getContent();

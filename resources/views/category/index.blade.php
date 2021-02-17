@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('./layout')
 
 @section('title', 'List categories')
 
@@ -19,7 +19,7 @@
                 <th scope="row">{{$category->id}}</th>
                 <td>{{$category->title}}</td>
                 <td>{{$category->slug}}</td>
-                <td><a href="add-new-category.php?id={{$category->id}}" class="btn btn-info">Edit</a><a href="delete_category.php?id={{$category->id}}" class="btn btn-danger">Delete</a></td>
+                <td><a href="/category/{{$category->id}}/edit/" class="btn btn-info">Edit</a><a href="/category/{{$category->id}}/destroy/" class="btn btn-danger">Delete</a></td>
             </tr>
         @empty
             <p>No categories</p>
@@ -28,6 +28,6 @@
         </tbody>
     </table>
     <div class="d-grid gap-1">
-        <a type="submit" href="add-new-category.php" class="btn btn-primary">Add new category</a>
+        <a type="submit" href="/category/create" class="btn btn-primary">Add new category</a>
     </div>
 @endsection

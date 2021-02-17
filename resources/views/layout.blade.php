@@ -14,13 +14,13 @@
 <div class="container">
     <ul class="nav justify-content-center">
         <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="index.php">Main</a>
+            <a class="nav-link" aria-current="page" href="/">Main</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="list-tags.php">Tags</a>
+            <a class="nav-link" aria-current="page" href="/tag">Tags</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="list-categories.php">Categories</a>
+            <a class="nav-link" href="/category">Categories</a>
         </li>
     </ul>
     @yield('content')
