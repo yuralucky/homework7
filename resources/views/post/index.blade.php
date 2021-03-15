@@ -1,9 +1,9 @@
-@extends('layout')
+@extends('./layout')
 
 @section('title', 'List posts')
 
 @section('content')
-    <h1>List tags</h1>
+    <h1>List posts</h1>
     <table class="table table-striped">
         <thead>
         <tr>
@@ -14,20 +14,20 @@
         </tr>
         </thead>
         <tbody>
-        @forelse($tags as $tag)
+        @forelse($posts as $post)
             <tr>
-                <th scope="row">{{$tag->id}}</th>
-                <td>{{$tag->title}}</td>
-                <td>{{$tag->slug}}</td>
-                <td><a href="/tag/{{$tag->id}}/edit/" class="btn btn-info">Edit</a><a href="/tag/{{$tag->id}}/destroy/" class="btn btn-danger">Delete</a></td>
+                <th scope="row">{{$post->id}}</th>
+                <td>{{$post->title}}</td>
+                <td>{{$post->body}}</td>
+                <td><a href="/post/{{$post->id}}/edit/" class="btn btn-info">Edit</a><a href="/post/{{$post->id}}/destroy/" class="btn btn-danger">Delete</a></td>
             </tr>
         @empty
-            <p>No tags</p>
+            <p>No posts</p>
         @endforelse
 
         </tbody>
     </table>
     <div class="d-grid gap-1">
-        <a type="submit" href="/tag/create" class="btn btn-primary">Add new tag</a>
+        <a type="submit" href="/post/create" class="btn btn-primary">Add new post</a>
     </div>
 @endsection

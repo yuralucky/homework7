@@ -1,9 +1,9 @@
 @extends('./layout')
 
-@section('title', 'List categories')
+@section('title', 'List posts')
 
 @section('content')
-    <h1>List categories</h1>
+    <h1>List category</h1>
     <table class="table table-striped">
         <thead>
         <tr>
@@ -19,10 +19,10 @@
                 <th scope="row">{{$category->id}}</th>
                 <td>{{$category->title}}</td>
                 <td>{{$category->slug}}</td>
-                <td><a href="/category/{{$category->id}}/edit/" class="btn btn-info">Edit</a><a href="/category/{{$category->id}}/destroy/" class="btn btn-danger">Delete</a></td>
+                <td><a href="/category/{{$category->id}}/edit/" class="btn btn-info">Edit</a><a href="/post/{{$category->id}}/destroy/" class="btn btn-danger">Delete</a></td>
             </tr>
         @empty
-            <p>No categories</p>
+            <p>No $category</p>
         @endforelse
 
         </tbody>

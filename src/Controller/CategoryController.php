@@ -17,7 +17,7 @@ class CategoryController
     public function create()
     {
         $category = new Category();
-        return view('category/form', compact('category'));
+        return view('category/add-category', compact('category'));
     }
 
     public function store()
@@ -34,7 +34,7 @@ class CategoryController
     public function edit($id)
     {
         $category = Category::find($id);
-        return view('category/form', compact('category'));
+        return view('category/update-category', compact('category'));
     }
 
     public function update($id)
