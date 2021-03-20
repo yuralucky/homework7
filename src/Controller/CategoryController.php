@@ -24,7 +24,14 @@ class CategoryController
     {
         $category = new Category();
         $data = request()->all();
-        var_dump($data);
+        $validator = validator()->make($data, [
+            'title' => ['required'],
+            'slug' => ['required', 'min:5']
+        ]);
+        if (count($error = $validator->errors())>0) {
+            $_SESSION['errors'] = $validator->errors()->toArray();
+            return new RedirectResponse($_SERVER['HTTP_REFERER']);
+        }
         $category->title = $data['title'];
         $category->slug = $data['slug'];
         $category->save();
@@ -50,7 +57,7 @@ class CategoryController
 
     public function destroy($id)
     {
-        $category=Category::find($id);
+        $category = Category::find($id);
         $category->delete();
         return new RedirectResponse('/category');
     }

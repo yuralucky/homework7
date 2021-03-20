@@ -24,12 +24,23 @@ class PostController
 
     public function store()
     {
-        $tags = new post();
+        $post = new Post();
         $data = request()->all();
-        $tags->title = $data['title'];
-        $tags->body = $data['body'];
-        $tags->save();
-        return new RedirectResponse('/posts');
+        $validator = validator()->make($data, [
+            'title' => ['required'],
+            'body' => ['required', 'min:5']
+        ]);
+
+        if (count($error = $validator->errors())>0) {
+            $_SESSION['errors'] = $validator->errors()->toArray();
+            return new RedirectResponse($_SERVER['HTTP_REFERER']);
+        }
+        $post->title = $data['title'];
+        $post->body = $data['body'];
+        $post->user_id=1;
+        $post->category_id=1;
+        $post->save();
+        return new RedirectResponse('/post');
     }
 
     public function edit($id)
@@ -51,7 +62,7 @@ class PostController
 
     public function destroy($id)
     {
-        $post=Post::find($id);
+        $post = Post::find($id);
         $post->delete();
         return new RedirectResponse('/post');
     }

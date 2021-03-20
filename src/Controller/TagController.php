@@ -24,7 +24,14 @@ class TagController
     {
         $tags = new Tag();
         $data = request()->all();
-        var_dump($data);
+        $validator = validator()->make($data, [
+            'title' => ['required'],
+            'slug' => ['required', 'min:5']
+        ]);
+        if (count($error = $validator->errors())>0) {
+            $_SESSION['errors'] = $validator->errors()->toArray();
+            return new RedirectResponse($_SERVER['HTTP_REFERER']);
+        }
         $tags->title = $data['title'];
         $tags->slug = $data['slug'];
         $tags->save();
@@ -44,6 +51,7 @@ class TagController
         $validator = validator()->make([
             'title'=>'required,min:5'
         ]);
+        dd($validator);
         $tag->title = $data['title'];
         $tag->slug = $data['slug'];
         $tag->update();
