@@ -1,6 +1,6 @@
 @extends('./layout')
 
-@section('title', 'List posts')
+@section('title', 'List categories')
 
 @section('content')
     <h1>List category</h1>
@@ -22,7 +22,8 @@
                 <th scope="row">{{$category->id}}</th>
                 <td>{{$category->title}}</td>
                 <td>{{$category->slug}}</td>
-                <td><a href="/category/{{$category->id}}/edit/" class="btn btn-info">Edit</a><a href="/post/{{$category->id}}/destroy/" class="btn btn-danger">Delete</a></td>
+                <td><a href="/category/{{$category->id}}/edit/" class="btn btn-info">Edit</a><a
+                            href="/category/{{$category->id}}/destroy/" class="btn btn-danger">Delete</a></td>
             </tr>
         @empty
             <p>No $category</p>
@@ -30,6 +31,51 @@
 
         </tbody>
     </table>
-    <a href="/categories/{{$categories->previousPageUrl()}}">Prev</a>
-    <a href="/categories/{{$categories->nextPageUrl()}}">Next</a>
+    @if($categories->currentPage()===1)
+        @foreach($categories->getUrlRange($categories->currentPage(), $categories->currentPage()+2) as $num=>$link)
+            <a href="/categories/{{$link}}">{{$num}}</a>
+        @endforeach
+        <span>...</span>
+        <a href="/categories/{{$categories->url($categories->lastPage())}}">{{$categories->lastPage()}}</a>
+        <a href="/categories/{{$categories->nextPageUrl()}}">Next</a>
+
+    @elseif($categories->currentPage()===$categories->lastPage())
+        <a href="/categories/{{$categories->previousPageUrl()}}">Prev</a>
+        <a href="/categories/{{$categories->url(1)}}">1</a>
+        <span>...</span>
+        @foreach($categories->getUrlRange($categories->currentPage()-2,$categories->currentPage()) as $num=>$link)
+            <a href="/categories/{{$link}}">{{$num}}</a>
+        @endforeach
+    @elseif($categories->currentPage()===2)
+        <a href="/categories/{{$categories->previousPageUrl()}}">Prev</a>
+        @foreach($categories->getUrlRange($categories->currentPage()-1, $categories->currentPage()+1) as $num=>$link)
+            <a href="/categories/{{$link}}">{{$num}}</a>
+        @endforeach
+        <span>...</span>
+
+        <a href="/categories/{{$categories->url($categories->lastPage())}}">{{$categories->lastPage()}}</a>
+        <a href="/categories/{{$categories->nextPageUrl()}}">Next</a>
+    @elseif($categories->currentPage()===$categories->lastPage()-1)
+        <a href="/categories/{{$categories->previousPageUrl()}}">Prev</a>
+        <a href="/categories/{{$categories->url(1)}}">1</a>
+
+        <span>...</span>
+        @foreach($categories->getUrlRange($categories->currentPage()-1, $categories->currentPage()+1) as $num=>$link)
+            <a href="/categories/{{$link}}">{{$num}}</a>
+        @endforeach
+        <a href="/categories/{{$categories->nextPageUrl()}}">Next</a>
+    @else
+        <a href="/categories/{{$categories->previousPageUrl()}}">Prev</a>
+        <a href="/categories/{{$categories->url(1)}}">1</a>
+
+        <span>...</span>
+        @foreach($categories->getUrlRange($categories->currentPage()-1, $categories->currentPage()+1) as $num=>$link)
+            <a href="/categories/{{$link}}">{{$num}}</a>
+        @endforeach
+        <span>...</span>
+        {{--    @if($categories->lastPage()!==$categories->currentPage())--}}
+        {{--        <a href="/categories/{{$categories->nextPageUrl()}}">Next</a>--}}
+        <a href="/categories/{{$categories->url($categories->lastPage())}}">{{$categories->lastPage()}}</a>
+        <a href="/categories/{{$categories->nextPageUrl()}}">Next</a>
+    @endif
 @endsection
