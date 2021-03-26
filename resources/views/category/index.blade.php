@@ -4,6 +4,9 @@
 
 @section('content')
     <h1>List category</h1>
+    <div class="d-grid gap-1">
+        <a type="submit" href="/category/create" class="btn btn-primary">Add new category</a>
+    </div>
     <table class="table table-striped">
         <thead>
         <tr>
@@ -27,7 +30,6 @@
 
         </tbody>
     </table>
-    <div class="d-grid gap-1">
-        <a type="submit" href="/category/create" class="btn btn-primary">Add new category</a>
-    </div>
+    <a href="/categories/{{$categories->previousPageUrl()}}">Prev</a>
+    <a href="/categories/{{$categories->nextPageUrl()}}">Next</a>
 @endsection

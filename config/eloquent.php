@@ -22,4 +22,4 @@ $capsule->setEventDispatcher(new Dispatcher(new Container));
 $capsule->setAsGlobal();
 $capsule->bootEloquent();
 
-//\Illuminate\Pagination\Paginator::currentPageResolver(fn() => $_GET['page'] ?? 1);
+\Illuminate\Pagination\Paginator::currentPageResolver(fn() => $_GET['page'] ?? 1);

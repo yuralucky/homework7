@@ -17,13 +17,13 @@
             <a class="nav-link" aria-current="page" href="/">Main</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="/tag">Tags</a>
+            <a class="nav-link" aria-current="page" href="/tags">Tags</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/category">Categories</a>
+            <a class="nav-link" href="/categories">Categories</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/post">Posts</a>
+            <a class="nav-link" href="/posts">Posts</a>
         </li>
     </ul>
     @yield('content')

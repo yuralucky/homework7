@@ -12,7 +12,7 @@ class PostController
 {
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::paginate(3);
         return view('post/index', compact('posts'));
     }
 
@@ -40,7 +40,7 @@ class PostController
         $post->user_id=1;
         $post->category_id=1;
         $post->save();
-        return new RedirectResponse('/post');
+        return new RedirectResponse('/posts');
     }
 
     public function edit($id)
@@ -53,10 +53,20 @@ class PostController
     {
         $post = Post::find($id);
         $data = request()->all();
+        $validator = validator()->make($data, [
+            'title' => ['required'],
+            'body' => ['required', 'min:5']
+        ]);
+
+        if (count($error = $validator->errors())>0) {
+            $_SESSION['errors'] = $validator->errors()->toArray();
+            return new RedirectResponse($_SERVER['HTTP_REFERER']);
+        }
+        $data = request()->all();
         $post->title = $data['title'];
         $post->body = $data['body'];
         $post->update();
-        return new RedirectResponse('/post');
+        return new RedirectResponse('/posts');
 
     }
 
@@ -64,6 +74,6 @@ class PostController
     {
         $post = Post::find($id);
         $post->delete();
-        return new RedirectResponse('/post');
+        return new RedirectResponse('/posts');
     }
 }

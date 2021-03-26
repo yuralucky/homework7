@@ -10,7 +10,7 @@ class CategoryController
 {
     public function index()
     {
-        $categories = Category::all();
+        $categories = Category::paginate(5);
         return view('category/index', compact('categories'));
     }
 
@@ -35,7 +35,7 @@ class CategoryController
         $category->title = $data['title'];
         $category->slug = $data['slug'];
         $category->save();
-        return new RedirectResponse('/category');
+        return new RedirectResponse('/categories');
     }
 
     public function edit($id)
@@ -48,10 +48,18 @@ class CategoryController
     {
         $category = Category::find($id);
         $data = request()->all();
+        $validator = validator()->make($data, [
+            'title' => ['required'],
+            'slug' => ['required', 'min:5']
+        ]);
+        if (count($error = $validator->errors())>0) {
+            $_SESSION['errors'] = $validator->errors()->toArray();
+            return new RedirectResponse($_SERVER['HTTP_REFERER']);
+        }
         $category->title = $data['title'];
         $category->slug = $data['slug'];
         $category->update();
-        return new RedirectResponse('/category');
+        return new RedirectResponse('/categories');
 
     }
 
@@ -59,6 +67,6 @@ class CategoryController
     {
         $category = Category::find($id);
         $category->delete();
-        return new RedirectResponse('/category');
+        return new RedirectResponse('/categories');
     }
 }

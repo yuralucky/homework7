@@ -10,7 +10,7 @@ class TagController
 {
     public function index()
     {
-        $tags = Tag::all();
+        $tags = Tag::paginate(5);
         return view('tag/index', compact('tags'));
     }
 
@@ -28,14 +28,14 @@ class TagController
             'title' => ['required'],
             'slug' => ['required', 'min:5']
         ]);
-        if (count($error = $validator->errors())>0) {
+        if (count($error = $validator->errors()) > 0) {
             $_SESSION['errors'] = $validator->errors()->toArray();
             return new RedirectResponse($_SERVER['HTTP_REFERER']);
         }
         $tags->title = $data['title'];
         $tags->slug = $data['slug'];
         $tags->save();
-        return new RedirectResponse('/tag');
+        return new RedirectResponse('/tags');
     }
 
     public function edit($id)
@@ -48,14 +48,18 @@ class TagController
     {
         $tag = Tag::find($id);
         $data = request()->all();
-        $validator = validator()->make([
-            'title'=>'required,min:5'
+        $validator = validator()->make($data, [
+            'title' => ['required'],
+            'slug' => ['required', 'min:5']
         ]);
-        dd($validator);
+        if (count($error = $validator->errors()) > 0) {
+            $_SESSION['errors'] = $validator->errors()->toArray();
+            return new RedirectResponse($_SERVER['HTTP_REFERER']);
+        }
         $tag->title = $data['title'];
         $tag->slug = $data['slug'];
         $tag->update();
-        return new RedirectResponse('/tag');
+        return new RedirectResponse('/tags');
 
     }
 
@@ -63,6 +67,6 @@ class TagController
     {
         $tag = Tag::find($id);
         $tag->delete();
-        return new RedirectResponse('/tag');
+        return new RedirectResponse('/tags');
     }
 }
